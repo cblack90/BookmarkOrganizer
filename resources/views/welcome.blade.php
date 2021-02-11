@@ -36,7 +36,7 @@
                 </div>
             @endif
             <div>
-                <button onclick="traverseBookmarks()">Prese me</button>
+                <button type='button' id="listButton" onclick="getBookmarks()">Prese me</button>
             </div>
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
@@ -131,21 +131,28 @@
             </div>
         </div>
         <script>
-        var bookmarkTreeNodes = chrome.bookmarks.getTree(
-            function(bookmarkTreeNodes) {
-            console.log(bookmarkTreeNodes);
-            });
+        function onFulfilled(bookmarks){
+            console.log(bookmarks);
         }
-        function traverseBookmarks(bookmarkTreeNodes) {
-            for(var i=0;i<bookmarkTreeNodes.length;i++) {
-            console.log(bookmarkTreeNodes[i].title, bookmarkTreeNodes[i].url ? bookmarkTreeNodes[i].url : "[Folder]");
-
-            if(bookmarkTreeNodes[i].children) {
-                traverseBookmarks(bookmarkTreeNodes[i].children);
-            } 
+        function onRejected(error){
+            console.log(`An error: ${error}`);
         }
+        function getBookmarks() {
+            var results = browser.bookmarks.getTree();
+            console.log(results);
         }
-    </script>
+        function processNode(node){
+            if(node.children){
+                node.children.forEach(function(child){ processNode(child);})
+            }
+            if(node.url){ console.log(node.url);}
+        }
+        // function getBookmarks(){
+        //     console.log('You got to this part')
+        //     //gettingBookmarks.then(onFulfilled, onRejected);
+        //     console.log(gettingBookmarks);
+        // }
+        </script>
     </body>
     
 </html>
