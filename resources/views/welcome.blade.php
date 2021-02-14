@@ -130,23 +130,25 @@
                 </div>
             </div>
         </div>
+        <script src="{{ ('resources/js/background.js') }}"></script>
         <script>
+        //var browser = browser || chrome;
         function onFulfilled(bookmarks){
             console.log(bookmarks);
         }
         function onRejected(error){
             console.log(`An error: ${error}`);
         }
-        function getBookmarks() {
-            var results = browser.bookmarks.getTree();
-            console.log(results);
-        }
-        function processNode(node){
-            if(node.children){
-                node.children.forEach(function(child){ processNode(child);})
-            }
-            if(node.url){ console.log(node.url);}
-        }
+        // function getBookmarks() {
+        //     var results = browser.bookmarks.getTree();
+        //     console.log(results);
+        // }
+        // function processNode(node){
+        //     if(node.children){
+        //         node.children.forEach(function(child){ processNode(child);})
+        //     }
+        //     if(node.url){ console.log(node.url);}
+        // }
         // function getBookmarks(){
         //     console.log('You got to this part')
         //     //gettingBookmarks.then(onFulfilled, onRejected);
